@@ -20,15 +20,15 @@ def prep_get_data_for_environment():
         inplace=True)
     return df
 
-def random_buy_sell_in_trading_environment_no_learning(df):
+def random_actions_in_trading_environment_no_learning(df,training_points):
 
     env = gym.make(
         'stocks-v0',
         df=df,
-        frame_bound=(1000,len(df)),
-        window_size=1000)
+        frame_bound=(training_points,len(df)),
+        window_size=training_points)
 
-    #print(f'signal features: \n{env.signal_features}')
+    print(f'signal features: \n{env.signal_features}')
 
     observation = env.reset()
     while True:
@@ -42,12 +42,12 @@ def random_buy_sell_in_trading_environment_no_learning(df):
     env.render_all()
     plt.show()
 
-def train_get_reinforcement_learning_model(df):
+def train_get_reinforcement_learning_model(df,training_points,test_points):
     env_maker = lambda: gym.make(
         'stocks-v0',
         df=df,
-        frame_bound=(1000,len(df)-50),
-        window_size=1000)
+        frame_bound=(training_points,len(df)-test_points),
+        window_size=training_points)
 
     env_ = DummyVecEnv([env_maker])
 
@@ -56,15 +56,15 @@ def train_get_reinforcement_learning_model(df):
         env_,
         verbose=1)
     print('modeling starting to learn')
-    model.learn(total_timesteps=100000)
+    model.learn(total_timesteps=10000)
     return model
 
-def evaluate_reinforcement_model(model):
+def evaluate_reinforcement_model_on_unseen_points(df,model,training_points,test_points):
     env__ = gym.make(
         'stocks-v0',
         df=df,
-        frame_bound=(len(df)-50,len(df)),
-        window_size=1000)
+        frame_bound=(len(df)-test_points,len(df)),
+        window_size=training_points)
 
     obs = env__.reset()
     while True:
@@ -79,10 +79,22 @@ def evaluate_reinforcement_model(model):
     env__.render_all()
     plt.show()  
 
+training_points = 1000
+test_points = 50
 
 df = prep_get_data_for_environment()
-print(f'length of df: {len(df)}')
-random_buy_sell_in_trading_environment_no_learning(df)
-model = train_get_reinforcement_learning_model(df)
-evaluate_reinforcement_model(model)
-x=0
+
+random_actions_in_trading_environment_no_learning(
+    df,
+    training_points)
+
+model = train_get_reinforcement_learning_model(
+    df,
+    training_points,
+    test_points)
+
+evaluate_reinforcement_model_on_unseen_points(
+    df,
+    model,
+    training_points,
+    test_points)
