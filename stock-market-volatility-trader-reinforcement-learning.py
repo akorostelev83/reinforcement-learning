@@ -56,7 +56,7 @@ def train_get_reinforcement_learning_model(df,training_points,test_points):
         env_,
         verbose=1)
     print('modeling starting to learn')
-    model.learn(total_timesteps=10000)
+    model.learn(total_timesteps=1000000)
     return model
 
 def evaluate_reinforcement_model_on_unseen_points(df,model,training_points,test_points):
