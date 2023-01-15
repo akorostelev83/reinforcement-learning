@@ -1,7 +1,7 @@
 # Stock Market Volatility Reinforcement-Learning
 
 ### This repo contains a reinforcement learning trader for stock market volatility index VIX(weekly)
---This model is uses MlpLstmPolicy in A2C algorithm to train the agent
+--This model uses MlpLstmPolicy in A2C algorithm to train the model
 
 ##### this method takes random actions in VIX: 
 --random_actions_in_trading_environment_no_learning()
