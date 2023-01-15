@@ -4,10 +4,10 @@
 ### This model is uses MlpLstmPolicy in A2C algorithm to train the agent
 
 ##### this method takes random actions in VIX: 
-random_actions_in_trading_environment_no_learning()
+--random_actions_in_trading_environment_no_learning()
 ##### this method trains the agent: 
-train_get_reinforcement_learning_model()
+--train_get_reinforcement_learning_model()
 ##### this method evaluates agent on unseen points: 
-evaluate_reinforcement_model_on_unseen_points()
+--evaluate_reinforcement_model_on_unseen_points()
 
 [Click here to view RL trader code for VIX](https://github.com/akorostelev83/reinforcement-learning/blob/main/stock-market-volatility-trader-reinforcement-learning.py)
